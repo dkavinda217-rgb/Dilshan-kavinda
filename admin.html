@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Dilshan Kavinda</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            padding-top: 100px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .admin-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--second-bg-color);
+            border-radius: 2rem;
+            box-shadow: 0 0 2rem rgba(0, 0, 0, 0.5);
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .admin-header h2 {
+            font-size: 3rem;
+            color: var(--main-color);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1.5rem;
+            border-radius: 0.8rem;
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-list {
+            margin-top: 4rem;
+        }
+
+        .service-item {
+            background: var(--bg-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .service-info h4 {
+            font-size: 1.8rem;
+            color: var(--main-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .service-info p {
+            font-size: 1.4rem;
+            color: #ccc;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 1.6rem;
+            color: var(--main-color);
+        }
+
+        /* Icon Selector Preview */
+        .icon-preview {
+            font-size: 2.4rem;
+            color: var(--main-color);
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">DK<span class="dot">.</span></a>
+        <nav class="navbar">
+            <a href="index.html">Back to Home</a>
+        </nav>
+    </header>
+
+    <section class="admin-section">
+        <!-- Login Container -->
+        <div class="login-container" id="loginContainer">
+            <div class="admin-container" style="max-width: 400px; text-align: center;">
+                <div class="admin-header">
+                    <h2>Admin Login</h2>
+                    <p>Please enter your password to continue.</p>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <input type="password" id="adminPassword" placeholder="Enter Password" required>
+                    </div>
+                    <button type="submit" class="btn primary-btn" style="width: 100%;">Login</button>
+                    <p id="loginError" style="color: #ef4444; margin-top: 1rem; display: none;">Incorrect Password!</p>
+                </form>
+                <a href="index.html" class="back-link">Back to Home</a>
+            </div>
+        </div>
+
+        <!-- Admin Content (Hidden by default) -->
+        <div class="admin-content" id="adminContent" style="display: none;">
+            <div class="admin-container">
+                <div class="admin-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2>Manage Services</h2>
+                        <button onclick="logout()" class="btn secondary-btn"
+                            style="padding: 0.5rem 1.5rem; font-size: 1.4rem;">Logout</button>
+                    </div>
+                    <p>Add or remove services from your portfolio</p>
+                </div>
+
+                <form id="addServiceForm">
+                    <div class="form-group">
+                        <label>Service Title</label>
+                        <input type="text" id="serviceTitle" placeholder="e.g., Logo Design" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="serviceDesc" rows="3" placeholder="Brief description of the service..."
+                            required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Icon Class (FontAwesome)</label>
+                        <select id="serviceIcon">
+                            <option value="fas fa-palette">Palette (Design)</option>
+                            <option value="fas fa-laptop-code">Laptop Code (Web)</option>
+                            <option value="fas fa-camera">Camera (Photography)</option>
+                            <option value="fas fa-bullhorn">Bullhorn (Marketing)</option>
+                            <option value="fas fa-pen-nib">Pen Nib (Writing)</option>
+                            <option value="fas fa-vector-square">Vector (Illustration)</option>
+                            <option value="fas fa-mobile-alt">Mobile (App Design)</option>
+                            <option value="fas fa-video">Video (Editing)</option>
+                            <option value="fas fa-briefcase">Briefcase (Business)</option>
+                            <option value="fas fa-chart-line">Chart (Analytics)</option>
+                        </select>
+                        <div class="icon-preview">
+                            <i id="iconPreviewDisplay" class="fas fa-palette"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn primary-btn" style="width: 100%;">Add Service</button>
+                </form>
+
+                <div class="service-list" id="adminServiceList">
+                    <!-- Services will be loaded here dynamically -->
+                </div>
+
+                <hr style="margin: 4rem 0; border: 0; border-top: 1px solid rgba(255,255,255,0.1);">
+
+                <!-- Portfolio Management -->
+                <div class="admin-header">
+                    <h2>Manage Portfolio</h2>
+                    <p>Add new projects to your portfolio</p>
+                </div>
+
+                <form id="addPortfolioForm">
+                    <div class="form-group">
+                        <label>Project Title</label>
+                        <input type="text" id="projectTitle" placeholder="e.g., Coffee Brand Identity" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category (Subtitle)</label>
+                        <input type="text" id="projectCategory" placeholder="e.g., Logo Design" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL or File Name</label>
+                        <input type="text" id="projectImage" placeholder="e.g., myproject.jpg" required>
+                        <p style="font-size: 1.2rem; color: #888; margin-top: 0.5rem; display: block;">Place image in
+                            same folder and type name, or use URL.</p>
+                    </div>
+                    <button type="submit" class="btn primary-btn" style="width: 100%;">Add Project</button>
+                </form>
+
+                <div class="service-list" id="adminPortfolioList">
+                    <!-- Portfolio items will be loaded here dynamically -->
+                </div>
+
+                <a href="index.html" class="back-link">View Website</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Check session on load
+        if (sessionStorage.getItem('isLoggedIn') === 'true') {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('adminContent').style.display = 'block';
+        }
+
+        // Login Logic
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const password = document.getElementById('adminPassword').value;
+                if (password === 'dilshan123') {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('adminContent').style.display = 'block';
+                } else {
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            });
+        }
+
+        // Logout Logic
+        function logout() {
+            sessionStorage.removeItem('isLoggedIn');
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>
